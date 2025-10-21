@@ -6,8 +6,8 @@ export default function Hero() {
       <div className={styles.overlay}></div>
       <video
         className={styles.heroImage}
-        src="/paths/pathsvideos/video1.mp4"
-        // src="/paths/pathsvideos/video2.mp4"
+        // src="/paths/pathsvideos/video1.mp4"
+        src="/paths/pathsvideos/video2.mp4"
         // src="/paths/pathsvideos/video3.mp4"
         // src="/paths/pathsvideos/video4.mp4"
         autoPlay
