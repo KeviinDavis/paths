@@ -1,0 +1,111 @@
+/* 1. The fixed bottom bar container */
+.bottomNav {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.4rem 0.4rem;
+  background: rgba(255, 255, 255, 0.12); /* light transparent layer */
+  backdrop-filter: blur(12px); /* adds the glass effect */
+  border: 1px solid rgba(255, 255, 255, 0.25); /* subtle border */
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* soft depth shadow */
+  z-index: 1000;
+}
+
+/* 2. Logo / brand square */
+/* .logo {
+  flex: none;
+  width: 3.45rem;
+  height: 3.45rem;
+  background: #222;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+} */
+
+/* 4. Generic nav item */
+.navItem {
+  background: transparent;
+  border: none;
+  color: #111;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.45rem .8rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.navItem:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #000;
+}
+
+.arrow {
+  font-size: 1rem;
+  margin-top: 1px;
+  opacity: 0.8;
+}
+
+/* 5. Highlighted “Visit us” button */
+/* Right-side cluster fixed at top-right */
+.rightButtons {
+  position: fixed;
+  top: 2rem;
+  right: 8rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 1001; /* above the center pill */
+}
+
+/* Plain text link */
+.textLink {
+  color: #fff;
+  font-size: 1.1rem;
+  text-decoration: none;
+  opacity: 0.95;
+  transition: opacity 0.2s ease;
+}
+
+.textLink:hover {
+  opacity: 0.75;
+}
+
+/* White rounded button */
+.ctaRight {
+  background: #fff;
+  color: #000;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.1s ease;
+}
+
+.ctaRight:hover {
+  background: #000;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* Optional: keep things tidy on small screens */
+@media (max-width: 640px) {
+  .rightButtons {
+    gap: 0.6rem;
+    right: 0.75rem;
+  }
+  .textLink { font-size: 0.85rem; }
+  .ctaRight { padding: 0.45rem 0.9rem; }
+}
