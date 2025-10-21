@@ -70,6 +70,10 @@ export default function TopNav() {
   return (
     <>
       <nav className={styles.bottomNav} ref={navRef}>
+          <div className={styles.logo}>
+          <img src="/paths/pathsimages/logo1.png" alt="PATHS Logo" />
+          {/* <img src="/paths/pathsimages/logo2.png" alt="PATHS Logo" /> */}
+        </div>
         <div className={styles.navLinks}>
           {/* ABOUT */}
           <div>

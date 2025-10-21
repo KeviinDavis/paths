@@ -1,7 +1,7 @@
 /* Main container */
 .bottomNav {
   position: fixed;
-  top: 1rem;
+  top: 2rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -13,6 +13,36 @@
   border-radius: 0.75rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   z-index: 1000;
+}
+
+/* Logo1 styles / positioning */
+.logo {
+  position: absolute;
+  left: -250%;
+  top: 80%;
+  transform: translateY(-50%);
+  height: 25rem;
+  display: flex;
+  align-items: center;
+}
+
+
+/* Logo2 styles / positioning */
+/* .logo {
+  position: absolute;
+  left: -265%;
+  top: 125%;
+  transform: translateY(-50%);
+  height: 20rem;
+  display: flex;
+  align-items: center;
+} */
+
+.logo img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  display: block;
 }
 
 /* Anchor wrapper for centering dropdown */
@@ -129,7 +159,7 @@
 /* Right-side buttons */
 .rightButtons {
   position: fixed;
-  top: 2rem;
+  top: 3rem;
   right: 8rem;
   display: flex;
   align-items: center;
