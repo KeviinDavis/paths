@@ -1,51 +1,137 @@
 'use client'
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./TopNav.module.css";
 
 export default function TopNav() {
   const [activeMenu, setActiveMenu] = useState(null);
+  const [closingMenu, setClosingMenu] = useState(null); // track fade-out
+  const navRef = useRef(null);
 
-  const handleMenu = (menu) => {
-    setActiveMenu(activeMenu === menu ? null : menu);
+  const toggleMenu = (menu) => {
+    // if clicking the same menu, trigger fade-out
+    if (activeMenu === menu) {
+      setClosingMenu(menu);
+      setTimeout(() => {
+        setActiveMenu(null);
+        setClosingMenu(null);
+      }, 250); // matches CSS duration
+    } else {
+      setActiveMenu(menu);
+      setClosingMenu(null);
+    }
+  };
+
+  // Close on outside click or Esc
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (navRef.current && !navRef.current.contains(e.target)) {
+        setClosingMenu(activeMenu);
+        setTimeout(() => {
+          setActiveMenu(null);
+          setClosingMenu(null);
+        }, 250);
+      }
+    };
+    const handleEsc = (e) => {
+      if (e.key === "Escape") {
+        setClosingMenu(activeMenu);
+        setTimeout(() => {
+          setActiveMenu(null);
+          setClosingMenu(null);
+        }, 250);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEsc);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEsc);
+    };
+  }, [activeMenu]);
+
+  const renderDropdown = (menuKey, content) => {
+    const isActive = activeMenu === menuKey;
+    const isClosing = closingMenu === menuKey;
+    if (!isActive && !isClosing) return null;
+
+    return (
+      <div
+        id={`menu-${menuKey}`}
+        className={`${styles.dropdown} ${
+          isClosing ? styles.dropdownExit : styles.dropdownEnter
+        }`}
+        role="menu"
+      >
+        {content}
+      </div>
+    );
   };
 
   return (
     <>
-      <nav className={styles.bottomNav}>
+      <nav className={styles.bottomNav} ref={navRef}>
         <div className={styles.navLinks}>
           {/* ABOUT */}
-          <div
-            onMouseEnter={() => setActiveMenu("about")}
-            onMouseLeave={() => setActiveMenu(null)}
-          >
-            <button className={styles.navItem} onClick={() => handleMenu("about")}>
-              About <span className={styles.arrow}>▾</span>
+          <div>
+            <button
+              className={styles.navItem}
+              onClick={() => toggleMenu("about")}
+              aria-expanded={activeMenu === "about"}
+              aria-controls="menu-about"
+            >
+              About{" "}
+              <span
+                className={`${styles.arrow} ${
+                  activeMenu === "about" ? styles.arrowOpen : ""
+                }`}
+              >
+                ▾
+              </span>
             </button>
           </div>
 
           {/* PROGRAMS */}
-          <div
-            onMouseEnter={() => setActiveMenu("programs")}
-            onMouseLeave={() => setActiveMenu(null)}
-          >
-            <button className={styles.navItem} onClick={() => handleMenu("programs")}>
-              Programs <span className={styles.arrow}>▾</span>
+          <div>
+            <button
+              className={styles.navItem}
+              onClick={() => toggleMenu("programs")}
+              aria-expanded={activeMenu === "programs"}
+              aria-controls="menu-programs"
+            >
+              Programs{" "}
+              <span
+                className={`${styles.arrow} ${
+                  activeMenu === "programs" ? styles.arrowOpen : ""
+                }`}
+              >
+                ▾
+              </span>
             </button>
           </div>
 
           {/* EVENTS */}
-          <div
-            onMouseEnter={() => setActiveMenu("events")}
-            onMouseLeave={() => setActiveMenu(null)}
-          >
-            <button className={styles.navItem} onClick={() => handleMenu("events")}>
-              Events <span className={styles.arrow}>▾</span>
+          <div>
+            <button
+              className={styles.navItem}
+              onClick={() => toggleMenu("events")}
+              aria-expanded={activeMenu === "events"}
+              aria-controls="menu-events"
+            >
+              Events{" "}
+              <span
+                className={`${styles.arrow} ${
+                  activeMenu === "events" ? styles.arrowOpen : ""
+                }`}
+              >
+                ▾
+              </span>
             </button>
           </div>
 
-          {/* DROPDOWNS (now centered relative to .navLinks) */}
-          {activeMenu === "about" && (
-            <div className={styles.dropdown}>
+          {/* DROPDOWNS */}
+          {renderDropdown(
+            "about",
+            <>
               <div className={styles.column}>
                 <h4>Mission</h4>
                 <p>To uplift individuals through holistic mental health care.</p>
@@ -58,28 +144,36 @@ export default function TopNav() {
                 <h4>Team</h4>
                 <p>Meet the dedicated professionals behind PATHS.</p>
               </div>
-            </div>
+            </>
           )}
 
-          {activeMenu === "programs" && (
-            <div className={styles.dropdown}>
+          {renderDropdown(
+            "programs",
+            <>
               <div className={styles.column}>
                 <h4>Psychiatric Rehabilitation Program</h4>
-                <p>Strength-based support for daily independence.</p>
+                <p>Strength-based support for daily life independence.</p>
               </div>
               <div className={styles.column}>
                 <h4>Therapy</h4>
-                <p>Helping clients navigate emotional challenges and personal growth.</p>
+                <p>
+                  Helping clients navigate emotional challenges and personal
+                  growth through compassionate guidance.
+                </p>
               </div>
               <div className={styles.column}>
                 <h4>TEACH</h4>
-                <p>Mentorship and skill-building for for young adults while fostering confidence, leadership.</p>
+                <p>
+                  Mentorship and skill-building for young adults, fostering
+                  confidence and leadership.
+                </p>
               </div>
-            </div>
+            </>
           )}
 
-          {activeMenu === "events" && (
-            <div className={styles.dropdown}>
+          {renderDropdown(
+            "events",
+            <>
               <div className={styles.column}>
                 <h4>Workshops</h4>
                 <p>Interactive sessions for skill development.</p>
@@ -92,7 +186,7 @@ export default function TopNav() {
                 <h4>Announcements</h4>
                 <p>Stay informed about upcoming PATHS events.</p>
               </div>
-            </div>
+            </>
           )}
         </div>
       </nav>
