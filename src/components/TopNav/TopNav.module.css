@@ -18,7 +18,7 @@
 /* Logo1 styles / positioning */
 .logo {
   position: absolute;
-  left: -250%;
+  left: -200%;
   top: 80%;
   transform: translateY(-50%);
   height: 25rem;
@@ -30,7 +30,7 @@
 /* Logo2 styles / positioning */
 /* .logo {
   position: absolute;
-  left: -265%;
+  left: -210%;
   top: 125%;
   transform: translateY(-50%);
   height: 20rem;
